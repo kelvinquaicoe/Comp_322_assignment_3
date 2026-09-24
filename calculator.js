@@ -1,18 +1,16 @@
 function runCalculator() {
   const validResults = [];
+  const results = document.querySelector("#results");
 
-  document.write("<style>");
-  document.write("body { font-family: Arial, sans-serif; background: #f4f7fb; color: #1d2733; margin: 24px; } ");
-  document.write("table { border-collapse: collapse; width: 80%; margin: 24px auto; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08); } ");
-  document.write("th, td { border: 1px solid #d7deea; padding: 12px 14px; text-align: center; } ");
-  document.write("th { background: #2d6cdf; color: white; } ");
-  document.write("tr:nth-child(even) td { background: #f9fbff; } ");
-  document.write(".error { color: #b42318; font-weight: bold; } ");
-  document.write("</style>");
+  results.innerHTML = "";
+  const resultHeading = document.createElement("h2");
+  resultHeading.textContent = "Calculator results";
+  results.appendChild(resultHeading);
 
-  document.write("<h2 style='text-align:center;'>Calculator Results</h2>");
-  document.write("<table>");
-  document.write("<tr><th>Number 1</th><th>Operator</th><th>Number 2</th><th>Result</th></tr>");
+  const resultTable = document.createElement("table");
+  resultTable.innerHTML = "<thead><tr><th>Number 1</th><th>Operator</th><th>Number 2</th><th>Result</th></tr></thead><tbody></tbody>";
+  const resultBody = resultTable.querySelector("tbody");
+  results.appendChild(resultTable);
 
   while (true) {
     const xInput = prompt("Enter the first number (x):", "");
@@ -36,7 +34,7 @@ function runCalculator() {
 
     if (isNaN(x) || isNaN(y) || !["+", "-", "*", "/", "%"].includes(operator)) {
       result = "Error";
-      document.write("<tr><td>" + xInput + "</td><td>" + operator + "</td><td>" + yInput + "</td><td class='error'>" + result + "</td></tr>");
+      addResultRow(resultBody, xInput, operator, yInput, result, true);
       continue;
     }
 
@@ -61,32 +59,42 @@ function runCalculator() {
     }
 
     if (result === "Error") {
-      document.write("<tr><td>" + x + "</td><td>" + operator + "</td><td>" + y + "</td><td class='error'>" + result + "</td></tr>");
+      addResultRow(resultBody, x, operator, y, result, true);
       continue;
     }
 
-    document.write("<tr><td>" + x + "</td><td>" + operator + "</td><td>" + y + "</td><td>" + result + "</td></tr>");
+    addResultRow(resultBody, x, operator, y, result, false);
     validResults.push(Number(result));
   }
 
-  document.write("</table>");
+  const summaryHeading = document.createElement("h2");
+  summaryHeading.textContent = "Summary";
+  results.appendChild(summaryHeading);
 
-  document.write("<h2 style='text-align:center;'>Summary</h2>");
-  document.write("<table>");
-  document.write("<tr><th>Minimum</th><th>Maximum</th><th>Average</th><th>Total</th></tr>");
+  const summaryTable = document.createElement("table");
+  summaryTable.innerHTML = "<thead><tr><th>Minimum</th><th>Maximum</th><th>Average</th><th>Total</th></tr></thead><tbody><tr></tr></tbody>";
+  const summaryRow = summaryTable.querySelector("tbody tr");
+  results.appendChild(summaryTable);
 
   if (validResults.length === 0) {
-    document.write("<tr><td>N/A</td><td>N/A</td><td>N/A</td><td>0</td></tr>");
+    summaryRow.innerHTML = "<td>N/A</td><td>N/A</td><td>N/A</td><td>0</td>";
   } else {
     const min = Math.min(...validResults);
     const max = Math.max(...validResults);
     const total = validResults.reduce((sum, value) => sum + value, 0);
     const avg = total / validResults.length;
 
-    document.write("<tr><td>" + min + "</td><td>" + max + "</td><td>" + avg + "</td><td>" + total + "</td></tr>");
+    summaryRow.innerHTML = "<td>" + min + "</td><td>" + max + "</td><td>" + avg + "</td><td>" + total + "</td>";
   }
-
-  document.write("</table>");
 }
 
-runCalculator();
+function addResultRow(tableBody, number1, operator, number2, result, isError) {
+  const row = tableBody.insertRow();
+  [number1, operator, number2, result].forEach((value) => {
+    const cell = row.insertCell();
+    cell.textContent = value;
+    if (isError && value === result) {
+      cell.className = "error";
+    }
+  });
+}

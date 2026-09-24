@@ -3,35 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calculator Assignment</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background: #f3f6fb;
-        color: #1d2733;
-        margin: 40px;
-        text-align: center;
-      }
-
-      a {
-        display: inline-block;
-        margin-top: 24px;
-        padding: 12px 20px;
-        background: #2d6cdf;
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: bold;
-      }
-
-      a:hover {
-        background: #1f4eb3;
-      }
-    </style>
+    <title>COMP 322 Assignments</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Assignment 3: JavaScript Calculator</h1>
-    <p>Open the calculator below.</p>
-    <a href="calculator.html">Go to Calculator</a>
+    <main class="landing-page">
+      <p class="eyebrow">COMP 322 coursework</p>
+      <h1>Web assignments</h1>
+      <p class="intro">A small collection of pages built with HTML, CSS, and JavaScript.</p>
+      <nav class="assignment-links" aria-label="Assignment pages">
+        <a class="link-card" href="little_prince.html">
+          <span class="link-card__number">01</span>
+          <span>
+            <strong>The Little Prince</strong>
+            <small>Styled page with image and reference passage</small>
+          </span>
+        </a>
+        <a class="link-card" href="introduction.html">
+          <span class="link-card__number">02</span>
+          <span>
+            <strong>Introduction</strong>
+            <small>Course introduction and project links</small>
+          </span>
+        </a>
+        <a class="link-card" href="calculator.html">
+          <span class="link-card__number">03</span>
+          <span>
+            <strong>JavaScript Calculator</strong>
+            <small>Prompt-based calculations with a summary</small>
+          </span>
+        </a>
+      </nav>
+    </main>
   </body>
 </html>
